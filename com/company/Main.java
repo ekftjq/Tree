@@ -4,95 +4,75 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Node<String> tree = new Node<>("root");
-        Node<String> tree2 = new Node<>("0");
 
-        //System.out.println(tree.getParent()); //returns null
-        //System.out.println(tree.getChildren()); //returns []
-        //System.out.println(tree.getData());
+        Node<String> advancedTree = new Node<>("a");
+        Node<String> child1 = new Node<>("b");
+        Node<String> child2 = new Node<>("c");
+        Node<String> child3 = new Node<>("d");
+        Node<String> child4 = new Node<>("e");
+        Node<String> child5 = new Node<>("f");
+        Node<String> child6 = new Node<>("g");
+        Node<String> child7 = new Node<>("h");
+        Node<String> child8 = new Node<>("i");
+        Node<String> child9 = new Node<>("j");
+        Node<String> child10 = new Node<>("k");
+        Node<String> child11 = new Node<>("l");
+        Node<String> child12 = new Node<>("m");
+        Node<String> child13 = new Node<>("n");
+        Node<String> child14 = new Node<>("o");
 
-        tree.addChild("a");
-        tree.addChild("b");
-        tree.addChild("c");
+        advancedTree.addChild(child1);
+        advancedTree.addChild(child2);
+        advancedTree.addChild(child3);
 
-        /*
-            root
-          a  b  c
+        child1.addChild(child4);
+        child1.addChild(child5);
 
-         */
+        child2.addChild(child6);
+        child2.addChild(child7);
 
-        //System.out.println(tree.getChildren().get(0).getData()); //data of the first child
-        //System.out.println(tree.getChildren().size());
+        child3.addChild(child8);
+        child3.addChild(child9);
 
-        tree.getChildren().get(0).addChild("d");
-        tree.getChildren().get(0).addChild("e");
-        tree.getChildren().get(1).addChild("f");
-        tree.getChildren().get(2).addChild("g");
+        child4.addChild(child10);
+        child4.addChild(child11);
 
+        child5.addChild(child12);
 
-        /*
-                     root
-          a           b        c
-        d  e          f        g
+        child6.addChild(child13);
 
-        root,
+        child7.addChild(child14);
 
-         */
+        String a = printTree(advancedTree);
+        System.out.println("The string created from the advanced Tree is : " +a);
 
-        tree2.addChild("1");
-        tree2.addChild("4");
-        tree2.getChildren().get(0).addChild("2");
-        tree2.getChildren().get(0).addChild("3");
-
-        /*
-                   0
-               1       4
-             2   3
-                           */
-
-        //System.out.println(printTree(tree2));
-        String r = printTree(tree);
-        System.out.println(r);
-
-        Node<String> tree3 = StringToTree(r);
-        String a = printTree(tree3);
-        System.out.println(a);
-        //System.out.println(tree3.getChildren().get(0).getData());
+        Node<String> b = StringToTree(a);
+        System.out.println("Printing the tree that was converted from a string : " + printTree(b));
 
 
 
-
-
-
-	// write your code here
     }
 
 
     public static String printTree(Node<String> tree) { //Depth first search
-        String result = "";
+        StringBuilder sb = new StringBuilder();
+        sb.append(tree.getData());
 
-        if(tree.isLeaf()) {
-            return tree.getData();
+        if (tree.hasChildren()) {
+            for (Node child : tree.getChildren()) {
+                sb.append("(");
+                sb.append(printTree(child));
+                sb.append(")");
+            }
         }
 
-        result = tree.getData();
-
-        for(int i = 0; i< tree.getChildren().size(); i++) {
-            //result = result + printTree(tree.getChildren().get(i));
-            //System.out.println(printTree(tree.getChildren().get(i)));
-            result = result + "(" + printTree(tree.getChildren().get(i)) + ")";
-        }
-
-        return result;
-
+        return sb.toString();
     }
 
     public static Node<String> StringToTree(String s) {
         char[] charArray = s.toCharArray();
         StringBuilder sb = new StringBuilder();
-        StringBuilder rest = new StringBuilder();
         int i = 0;
-        int len = charArray.length;
         Node<String> root = new Node<>("");
 
         while(charArray[i] != '(') {
@@ -194,12 +174,12 @@ public class Main {
             }
             String data = cs.toString();
             String css = ns.toString();
-            String back = splitString(css);
-            //System.out.println(data);
-            //System.out.println(back);
+            //tring back = splitString(css);
+            //System.out.println("the front is :" +data);
+            //System.out.println("the back is :" + css);
             Node<String> child = new Node(data);
             root.addChild(child);
-            createTree(child, back);
+            createTree(child, css);
             //createTree(child,"(2)");
         }
         else
@@ -227,7 +207,7 @@ public class Main {
 
     private static String splitString(String css) {
         String s = "(" + css;
-        //System.out.println(s);
+        System.out.println("split string is :" +s);
         char[] charArray = s.toCharArray();
         int i = 0;
         int len = charArray.length;
